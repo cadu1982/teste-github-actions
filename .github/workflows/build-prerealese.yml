@@ -1,0 +1,69 @@
+name: Genereate Prerelease Package
+
+# on:
+#   workflow_call:
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  Publish-prerelease:
+    if: contains(github.head_ref, 'alpha') || contains(github.head_ref, 'beta') || contains(github.head_ref, 'prerelease')
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['5.0.x', '6.0.x']
+    continue-on-error: ${{ matrix.dotnet-version == '5.0.x' }}
+
+    env:
+      PROJECT_PATH: ./src/*.csproj
+      NUGET_SERVER: https://api.nuget.org/v3/index.json #https://nuget.pkg.github.com/$GITHUB_REPOSITORY_OWNER/index.json
+      PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+      
+    - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+        source-url: ${{ env.NUGET_SERVER }}
+      env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Find the specific suffix to compose the version format
+      id: prerelease-suffix-version
+      uses: ./versioning_automationB.yml  #BancoArbi/github-find-prerelease-suffix-actions@v1.0.0
+      
+    - name: Semantic versioning
+      id: versioning
+      uses: paulhatch/semantic-version@v4.0.2
+      with:
+        tag_prefix: ''
+        major_pattern: "break:"
+        minor_pattern: "feat:"
+        patch_pattern: "fix:"
+        format: "${major}.${minor}.${patch}-${{ steps.prerelease-suffix-version.outputs.prerelease_suffix }}${increment}"
+
+    - name: Build Project and Generate Package
+      run: dotnet build ${{ env.PROJECT_PATH }} -c Release -p:PackageVersion=${{ steps.versioning.outputs.version }} -o ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+
+    - name: Push no NuGet
+      run:  dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ env.NUGET_SERVER }} --skip-duplicate
+
+    # - name: Push Package on GitHub Package Registry
+    #   run: dotnet nuget push '${{ env.PACKAGE_OUTPUT_DIRECTORY }}/*.nupkg' --api-key ${{ secrets.GITHUB_TOKEN }} --source ${{ env.NUGET_SERVER }} --skip-duplicate
+
+    - name: Create Release
+      if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        title: ${{ steps.versioning.outputs.version }}
+        automatic_release_tag: ${{ steps.versioning.outputs.version }}
+        prerelease: true
