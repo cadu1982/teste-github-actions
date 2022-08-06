@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Workflow version
         id: versioning
         uses: actions/teste-github-actions@v1 # BancoArbi/github-semantic-versioning-actions@v1.0.0
