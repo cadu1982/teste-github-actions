@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Workflow version
         id: versioning
-        uses: ./.github/actions/vb/ # BancoArbi/github-semantic-versioning-actions@v1.0.0
+        uses: ./.github/actions/vb # BancoArbi/github-semantic-versioning-actions@v1.0.0
         with:
           custom-input: 10
 
