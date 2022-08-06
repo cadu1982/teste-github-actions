@@ -19,7 +19,7 @@ runs:
         suffix_array = re.findall("alpha|beta|prerelease", name_branch)
         env_file = os.getenv('GITHUB_ENV')
         with open(env_file, "a") as myfile:
-        myfile.write("PRERELEASE=" + suffix_array[0])
+         myfile.write("PRERELEASE=" + suffix_array[0])
       shell: python
   
     - name: Set prerelease suffix as output
