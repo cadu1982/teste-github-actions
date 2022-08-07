@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Workflow version
         id: versioning
-        uses: .github/actions/vb@mater #cadu1982/github-semantic-versioning@master #./teste-github-actions/.github/actions/vb@master  #BancoArbi/github-semantic-versioning-actions@v1.0.0 
+        uses: .github/actions/vb/aaction.yml@mater #cadu1982/github-semantic-versioning@master #./teste-github-actions/.github/actions/vb@master  #BancoArbi/github-semantic-versioning-actions@v1.0.0 
         with:
           fetch-depth: 0
           
