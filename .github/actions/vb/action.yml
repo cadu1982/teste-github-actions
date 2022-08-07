@@ -12,11 +12,8 @@ runs:
   steps:
     - name: Checkout Current Repository
       uses: actions/checkout@v2
-      with:
-        path: ./source-repo/
-
+      
     - name: Find the specific suffix to compose the version format
-      working-directory: ./source-repo/
       run: |
         import re
         import os
