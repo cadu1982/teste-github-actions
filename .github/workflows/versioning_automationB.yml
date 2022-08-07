@@ -16,7 +16,7 @@ jobs:
         uses: ./.github/actions/vb # BancoArbi/github-semantic-versioning-actions@v1.0.0
         with:
           custom-input: 10
-
+          
       - name: Create Release
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
         id: version
