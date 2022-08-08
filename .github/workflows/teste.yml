@@ -33,13 +33,6 @@ jobs:
       env:
           NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
-    # - uses: actions/checkout@v3
-    # - name: Workflow version
-    #   id: versioning
-    #   uses: ./.github/actions/ #cadu1982/github-semantic-versioning@master #./teste-github-actions/.github/actions/vb@master  #BancoArbi/github-semantic-versioning-actions@v1.0.0 
-    #   with:
-    #     fetch-depth: 0
-          
     - name: Checkout Current Repository
       uses: actions/checkout@v2
       
@@ -81,11 +74,6 @@ jobs:
         prerelease: false
 
         
-    # - name: Find the specific suffix to compose the version format
-    #   id: prerelease-suffix-version
-    #   uses: ./versioning_automationB.yml  #BancoArbi/github-find-prerelease-suffix-actions@v1.0.0 33
-      
-    
     - name: Build Project and Generate Package
       run: dotnet build ${{ env.PROJECT_PATH }} -c Release -p:PackageVersion=${{ steps.versioning.outputs.version }} -o ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
