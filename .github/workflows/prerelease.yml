@@ -73,7 +73,10 @@ jobs:
         automatic_release_tag: ${{ steps.versioning.outputs.version }}
         prerelease: false
 
+<<<<<<< HEAD:.github/workflows/teste.yml
         
+=======
+>>>>>>> e8af53265bc24101ca0632468cb7e467d0217eff:.github/workflows/prerelease.yml
     - name: Build Project and Generate Package
       run: dotnet build ${{ env.PROJECT_PATH }} -c Release -p:PackageVersion=${{ steps.versioning.outputs.version }} -o ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
