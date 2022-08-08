@@ -1,5 +1,10 @@
 name: Versioning Automation with SemVer
 
+<<<<<<< HEAD
+=======
+on:
+  workflow_call:
+>>>>>>> 05967a9b37aa28fa7539d444ebaf019548ece7a7
 
 # on: pull_request
 
