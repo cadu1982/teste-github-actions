@@ -2,9 +2,9 @@ name: .NET 5 + Pack + Push no NuGet
 
 on:
   push:
-    branches: [ diego ]
+    branches: [ master ]
   pull_request:
-    branches: [ diego ]
+    branches: [ master ]
 
 jobs:
   pack-push:
