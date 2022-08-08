@@ -75,7 +75,7 @@ jobs:
         
     # - name: Find the specific suffix to compose the version format
     #   id: prerelease-suffix-version
-    #   uses: ./versioning_automationB.yml  #BancoArbi/github-find-prerelease-suffix-actions@v1.0.0
+    #   uses: ./versioning_automationB.yml  #BancoArbi/github-find-prerelease-suffix-actions@v1.0.0 33
       
     - name: Semantic versioning
       id: versioning
