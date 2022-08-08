@@ -18,7 +18,7 @@ jobs:
     continue-on-error: ${{ matrix.dotnet-version == '5.0.x' }}
 
     env:
-      PROJECT_PATH: ./ #./src/*.csproj
+      PROJECT_PATH: ./src/*.csproj
       NUGET_SERVER: https://api.nuget.org/v3/index.json #https://nuget.pkg.github.com/$GITHUB_REPOSITORY_OWNER/index.json
       PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
 
