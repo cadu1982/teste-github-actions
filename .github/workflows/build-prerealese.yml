@@ -38,6 +38,10 @@ jobs:
     
     - name: debug folder
       run: ls -lahs
+    - name: debug deep
+      run: ls .github -lahs
+    - name: debug deep2
+      run: ls .github/* -lahs
     - name: Find the specific suffix to compose the version format
       id: prerelease-suffix-version
       uses: ./versioning_automationB.yml  #BancoArbi/github-find-prerelease-suffix-actions@v1.0.0

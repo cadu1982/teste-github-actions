@@ -1,7 +1,5 @@
 name: Versioning Automation with SemVer
 
-on:
-  workflow_call:
 
 # on: pull_request
 
