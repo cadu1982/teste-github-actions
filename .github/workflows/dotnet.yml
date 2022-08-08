@@ -4,7 +4,7 @@ on:
   push:
     branches: [ master ]
   pull_request:
-    branches: [ diego ]
+    branches: [ master ]
 
 jobs:
   pack-push:
