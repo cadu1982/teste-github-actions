@@ -61,7 +61,7 @@ jobs:
         major_pattern: "break:"
         minor_pattern: "feat:"
         patch_pattern: "fix:"
-        format: "${major}.${minor}.${patch}-${{ steps.prerelease-suffix-version.outputs.prerelease_suffix }}${increment}"
+        format: "${major}.${minor}.${patch}-${{ steps.get-prerelease-suffix-version.outputs.prerelease_suffix }}${increment}"
         
     - name: Create Release
       if: ${{ !startsWith(github.ref, 'refs/tags/') }}
