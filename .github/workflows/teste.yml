@@ -6,7 +6,7 @@ name: Genereate Prerelease Package
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   Publish-prerelease:
@@ -36,9 +36,46 @@ jobs:
       env:
           NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
+    # - uses: actions/checkout@v3
+    # - name: Workflow version
+    #   id: versioning
+    #   uses: ./.github/actions/ #cadu1982/github-semantic-versioning@master #./teste-github-actions/.github/actions/vb@master  #BancoArbi/github-semantic-versioning-actions@v1.0.0 
+    #   with:
+    #     fetch-depth: 0
+          
+    - name: Checkout Current Repository
+      uses: actions/checkout@v2
+      
     - name: Find the specific suffix to compose the version format
-      id: prerelease-suffix-version
-      uses: ./versioning_automationB.yml  #BancoArbi/github-find-prerelease-suffix-actions@v1.0.0
+      run: |
+        import re
+        import os
+        github_head_ref = "${{ github.head_ref }}"
+        name_branch = github_head_ref.lower()
+        suffix_array = re.findall("alpha|beta|prerelease", name_branch)
+        env_file = os.getenv('GITHUB_ENV')
+        with open(env_file, "a") as myfile:
+         myfile.write("PRERELEASE=" + suffix_array[0])
+      shell: python
+  
+    - name: Set prerelease suffix as output
+      id: get-prerelease-suffix
+      run: echo "::set-output name=prerelease_suffix::$(echo $PRERELEASE)"
+      shell: bash
+    
+    - name: Create Release
+      if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+      id: version
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        title: ${{ steps.versioning.outputs.version }}
+        automatic_release_tag: ${{ steps.versioning.outputs.version }}
+        prerelease: false
+        
+    # - name: Find the specific suffix to compose the version format
+    #   id: prerelease-suffix-version
+    #   uses: ./versioning_automationB.yml  #BancoArbi/github-find-prerelease-suffix-actions@v1.0.0
       
     - name: Semantic versioning
       id: versioning
