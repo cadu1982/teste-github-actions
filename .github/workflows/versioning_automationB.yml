@@ -11,6 +11,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: debug folder
+        run: ls -lahs
+      - name: debug deep
+        run: ls .github -lahs
+      - name: debug deep2
+        run: ls .github/* -lahs
       - name: Workflow version
         id: versioning
         uses: ./.github/actions/ #cadu1982/github-semantic-versioning@master #./teste-github-actions/.github/actions/vb@master  #BancoArbi/github-semantic-versioning-actions@v1.0.0 
