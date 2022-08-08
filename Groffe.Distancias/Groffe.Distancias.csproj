@@ -2,15 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <PackageId>Groffe.test.Distancias</PackageId>
+    <PackageId>Groffe.Distancias</PackageId>
     <Version>1.0.0</Version>
-    <Authors>Teste</Authors>
+    <Authors>Renato Groffe</Authors>
     <Company>Groffe</Company>
-    <PackageTags>NuGet;.NET;Classlib;GitHub;Actions</PackageTags>
+    <PackageTags>NuGet;.NET 5;Classlib;GitHub;Actions</PackageTags>
     <Description>
-      Biblioteca para conversão de distâncias em Milhas para Km (e vice-versa)
+      Biblioteca para conversão de distâncias em Milhas para Km
     </Description>
   </PropertyGroup>
-<!-- teste -->
 
 </Project>
