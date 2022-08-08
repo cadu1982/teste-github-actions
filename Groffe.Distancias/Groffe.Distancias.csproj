@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <PackageId>Groffe.testgithub.Distancias</PackageId>
-    <Version>0.0.1</Version>
+    <Version>1.0.0</Version>
     <Authors>teste</Authors>
     <Company>teste</Company>
     <PackageTags>NuGet;.NET;Classlib;GitHub;Actions</PackageTags>
