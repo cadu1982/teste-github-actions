@@ -74,7 +74,7 @@ jobs:
         prerelease: false
 
     - name: Build Project and Generate Package
-      run: dotnet build ${{ env.PROJECT_PATH }} -c Release -p:PackageVersion=${{ steps.versioning.outputs.version }} -o ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+      run: dotnet pack ${{ env.PROJECT_PATH }} -c Release -p:PackageVersion=${{ steps.versioning.outputs.version }} -o ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
     # - name: Push no NuGet
     #   run:  dotnet nuget push *.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ env.NUGET_SERVER }} --skip-duplicate
