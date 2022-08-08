@@ -63,20 +63,6 @@ jobs:
       run: echo "::set-output name=prerelease_suffix::$(echo $PRERELEASE)"
       shell: bash
     
-    - name: Create Release
-      if: ${{ !startsWith(github.ref, 'refs/tags/') }}
-      id: version
-      uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        title: ${{ steps.versioning.outputs.version }}
-        automatic_release_tag: ${{ steps.versioning.outputs.version }}
-        prerelease: false
-        
-    # - name: Find the specific suffix to compose the version format
-    #   id: prerelease-suffix-version
-    #   uses: ./versioning_automationB.yml  #BancoArbi/github-find-prerelease-suffix-actions@v1.0.0 33
-      
     - name: Semantic versioning
       id: versioning
       uses: paulhatch/semantic-version@v4.0.2
@@ -86,7 +72,23 @@ jobs:
         minor_pattern: "feat:"
         patch_pattern: "fix:"
         format: "${major}.${minor}.${patch}-${{ steps.prerelease-suffix-version.outputs.prerelease_suffix }}${increment}"
+        
+    - name: Create Release
+      if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+      id: version
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        title: ${{ steps.versioning.outputs.version }}
+        automatic_release_tag: ${{ steps.versioning.outputs.version }}
+        prerelease: false
 
+        
+    # - name: Find the specific suffix to compose the version format
+    #   id: prerelease-suffix-version
+    #   uses: ./versioning_automationB.yml  #BancoArbi/github-find-prerelease-suffix-actions@v1.0.0 33
+      
+    
     - name: Build Project and Generate Package
       run: dotnet build ${{ env.PROJECT_PATH }} -c Release -p:PackageVersion=${{ steps.versioning.outputs.version }} -o ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
 
