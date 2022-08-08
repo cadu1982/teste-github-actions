@@ -36,6 +36,8 @@ jobs:
       env:
           NUGET_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
+    - name: debug folder
+      run: ls -lahs
     - name: Find the specific suffix to compose the version format
       id: prerelease-suffix-version
       uses: ./versioning_automationB.yml  #BancoArbi/github-find-prerelease-suffix-actions@v1.0.0
