@@ -1,0 +1,34 @@
+name: Versioning Automation with SemVer
+
+on:
+  workflow_call:
+
+# on: pull_request
+
+jobs:
+  Workflow-versioning:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: debug folder
+        run: ls -lahs
+      - name: debug deep
+        run: ls .github -lahs
+      - name: debug deep2
+        run: ls .github/* -lahs
+      - name: Workflow version
+        id: versioning
+        uses: ./.github/actions/ #cadu1982/github-semantic-versioning@master #./teste-github-actions/.github/actions/vb@master  #BancoArbi/github-semantic-versioning-actions@v1.0.0 
+        with:
+          fetch-depth: 0
+          
+      - name: Create Release
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        id: version
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          title: ${{ steps.versioning.outputs.version }}
+          automatic_release_tag: ${{ steps.versioning.outputs.version }}
+          prerelease: false
