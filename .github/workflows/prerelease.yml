@@ -17,7 +17,7 @@ jobs:
     env:
       PROJECT_PATH: ./Groffe.Distancias/Groffe.Distancias.csproj
       NUGET_SERVER: https://api.nuget.org/v3/index.json 
-      # PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
+      PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
 
     steps:
     - name: Checkout
